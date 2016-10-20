@@ -96,10 +96,14 @@ class GazeboRosSetJoint : public ModelPlugin
   private: physics::JointPtr joint_;
   /// \brief The current joint angle
   private: double current_position_;
+  /// \brief The current speed
+  private: double current_speed_;
   /// \brief The position delta to apply each simulator cycle if we aren't at the requested position
   private: double delta_;
   /// \brief The actuation direction.
   private: int reversed_direction_;
+  /// \brief Multiply the requested setting by this
+  private: double scale_;
 
   /// \brief A pointer to the ROS node.  A node will be instantiated if it does not exist.
   private: ros::NodeHandle* rosnode_;

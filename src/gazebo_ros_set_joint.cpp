@@ -35,8 +35,10 @@ GazeboRosSetJoint::GazeboRosSetJoint()
 {
   this->joint_msg_.data = 0;
   this->current_position_ = 0;
+  this->current_speed_ = 0;
   this->delta_ = 0.00035; // radians. Move 0.02 degrees/iteration, or 20 degrees/sec at 1000 simulations/sec
   this->reversed_direction_ = 0; // default forward
+  this->scale_ = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -102,6 +104,11 @@ void GazeboRosSetJoint::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
     this->reversed_direction_ = _sdf->GetElement("reversed_direction")->Get<int>();
   }
 
+  if (_sdf->HasElement("scale"))
+  {
+    this->scale_ = _sdf->GetElement("scale")->Get<double>();
+  }
+
   std::cerr << "Loading gazebo_ros_set_joint with jointName " << this->joint_name_ 
             << " on topic " << this->topic_name_ 
             << " actuation mode: " << this->actuationMode_ 
@@ -142,9 +149,9 @@ void GazeboRosSetJoint::UpdateCommandedPosition(const std_msgs::Float64::ConstPt
 {
   //this->lock_.lock();
   if (0 == this->reversed_direction_)
-    this->joint_msg_.data = _msg->data;
+    this->joint_msg_.data = _msg->data * this->scale_;
   else
-    this->joint_msg_.data = 0 - _msg->data;
+    this->joint_msg_.data = 0 - (_msg->data * this->scale_);
   //this->lock_.unlock();
 }
 
@@ -177,6 +184,11 @@ void GazeboRosSetJoint::UpdateChild()
   else if (1 == this->actuationMode_)
   {
     this->joint_->SetForce(0, this->joint_msg_.data);
+  }
+  else if (2 == this->actuationMode_)
+  {
+    this->current_speed_ += (this->delta_ * this->joint_msg_.data);
+    this->joint_->SetVelocity(0, this->current_speed_);
   }
 
   //this->lock_.unlock();
