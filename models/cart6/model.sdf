@@ -1,0 +1,449 @@
+<?xml version="1.0" ?>
+
+<sdf version="1.5">
+
+  <model name="cart6">
+    <link name="chassis">
+      <pose>0 0 0.15  0 0 0</pose>
+      <inertial>
+        <pose>0.1 0 0  0 0 0</pose>
+        <mass>10</mass>
+        <inertia>
+          <ixx>0.21666666666666667</ixx>
+          <iyy>0.8416666666666667</iyy>
+          <izz>1.0416666666666667</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>1.0 0.3 0.1</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>1.0 0.3 0.1</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Yellow</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    
+    <link name="front_left_steering_head">
+      <pose>0.4 0.28 0.15 0 0 0</pose>
+      <inertial>
+        <pose>0.4 0.28 0.15 0 0 0</pose>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0.00030791666666666667</ixx>
+          <iyy>0.00030791666666666667</iyy>
+          <izz>0.0005625</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.2 0.05 0.15</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.2 0.05 0.15</size>
+          </box>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="front_left_steer" type="revolute">
+      <pose>0.1 0 0 0 0 0</pose>
+      <parent>chassis</parent>
+      <child>front_left_steering_head</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-0.4108652381980153</lower>
+          <upper>0.4108652381980153</upper>
+        </limit>
+        <dynamics>
+          <damping>1</damping>
+          <spring_stiffness>10</spring_stiffness>
+          <spring_reference>0</spring_reference>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <link name="wheel_front_left">
+      <pose>0.5 0.358 0.15  -1.5707963267948966 -0.08726646259971647 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.0030791666666666667</ixx>
+          <iyy>0.0030791666666666667</iyy>
+          <izz>0.005625</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>0.15</radius>
+            <length>0.08</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.7</mu2>
+              <fdir1>0 0 0</fdir1>
+		      <slip1>0.8</slip1>
+		      <slip2>0.7</slip2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>0.15</radius>
+            <length>0.08</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+    <joint name="wheel_front_left_spin" type="revolute">
+      <parent>front_left_steering_head</parent>
+      <child>wheel_front_left</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+    
+    <link name="front_right_steering_head">
+      <pose>0.4 -0.28 0.15 0 0 0</pose>
+      <inertial>
+        <pose>0.4 0.28 0.15 0 0 0</pose>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0.00030791666666666667</ixx>
+          <iyy>0.00030791666666666667</iyy>
+          <izz>0.0005625</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.2 0.05 0.15</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.2 0.05 0.15</size>
+          </box>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="front_right_steer" type="revolute">
+      <pose>0.1 0 0 0 0 0</pose>
+      <parent>chassis</parent>
+      <child>front_right_steering_head</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-0.4108652381980153</lower>
+          <upper>0.4108652381980153</upper>
+        </limit>
+      </axis>
+    </joint>
+    
+    <link name="wheel_front_right">
+      <pose>0.5 -0.358 0.15  -1.5707963267948966 -0.08726646259971647 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.0030791666666666667</ixx>
+          <iyy>0.0030791666666666667</iyy>
+          <izz>0.005625</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>0.15</radius>
+            <length>0.08</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.7</mu2>
+              <fdir1>0 0 0</fdir1>
+		      <slip1>0.8</slip1>
+		      <slip2>0.7</slip2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>0.15</radius>
+            <length>0.08</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+    <joint name="wheel_front_right_spin" type="revolute">
+      <parent>front_right_steering_head</parent>
+      <child>wheel_front_right</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+    <link name="steering_tie_rod">
+      <pose>0.24 0 0.22 0 0 0</pose>
+      <inertial>
+        <pose>0.30 0 0.26 0 0 0</pose>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0.00030791666666666667</ixx>
+          <iyy>0.00030791666666666667</iyy>
+          <izz>0.0005625</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.05 0.61 0.05</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.05 0.61 0.05</size>
+          </box>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="front_right_tie_rod" type="revolute">
+      <pose>-0.1 0 0 0 0 0</pose>
+      <parent>steering_tie_rod</parent>
+      <child>front_right_steering_head</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+    <joint name="front_left_tie_rod" type="revolute">
+      <pose>-0.1 0 0 0 0 0</pose>
+      <parent>steering_tie_rod</parent>
+      <child>front_left_steering_head</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+    <link name="wheel_rear_left">
+      <pose>-0.5 0.298 0.15  -1.5707963267948966 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.0030791666666666667</ixx>
+          <iyy>0.0030791666666666667</iyy>
+          <izz>0.005625</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>0.15</radius>
+            <length>0.08</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.7</mu2>
+              <fdir1>0 0 0</fdir1>
+		      <slip1>0.8</slip1>
+		      <slip2>0.7</slip2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>0.15</radius>
+            <length>0.08</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <joint name="wheel_rear_left_joint" type="revolute">
+      <parent>chassis</parent>
+      <child>wheel_rear_left</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+    
+    <link name="wheel_rear_right">
+      <pose>-0.5 -0.298 0.15  -1.5707963267948966 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.0030791666666666667</ixx>
+          <iyy>0.0030791666666666667</iyy>
+          <izz>0.005625</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>0.15</radius>
+            <length>0.08</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.7</mu2>
+              <fdir1>0 0 0</fdir1>
+		      <slip1>0.8</slip1>
+		      <slip2>0.7</slip2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>0.15</radius>
+            <length>0.08</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <joint name="wheel_rear_right_joint" type="revolute">
+      <parent>chassis</parent>
+      <child>wheel_rear_right</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+    <plugin name="drive" filename="libgazebo_ros_set_joint.so">
+      <jointName>wheel_rear_right_joint</jointName>
+      <topicName>chassis_force</topicName>
+      <actuationMode>2</actuationMode>
+      <scale>50</scale>
+      <reversed_direction>0</reversed_direction>
+    </plugin>
+
+    <plugin name="drive" filename="libgazebo_ros_set_joint.so">
+      <jointName>wheel_rear_left_joint</jointName>
+      <topicName>chassis_force</topicName>
+      <actuationMode>2</actuationMode>
+      <scale>100</scale>
+      <reversed_direction>0</reversed_direction>
+    </plugin>
+
+    <plugin name="steer" filename="libgazebo_ros_set_joint.so">
+      <jointName>front_right_steer</jointName>
+      <topicName>steer_angle</topicName>
+      <actuationMode>1</actuationMode>
+      <reversed_direction>0</reversed_direction>
+      <scale>10</scale>
+    </plugin>
+
+<!--
+    <include>
+    <uri>model://my_hokuyo</uri>
+      <name>laser1</name>
+      <pose>0.2 0 0.5 0 0 0</pose>
+    </include>
+    <joint name="hokuyo_joint" type="revolute">
+      <parent>chassis</parent>
+      <child>laser1</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <upper>0</upper>
+          <lower>0</lower>
+        </limit>
+      </axis>
+    </joint>
+-->
+
+  </model>
+
+
+</sdf>
