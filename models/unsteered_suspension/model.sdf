@@ -222,7 +222,7 @@
         <geometry>
           <cylinder>
             <radius>1.35</radius>
-            <length>0.5</length>
+            <length>1.25</length>
           </cylinder>
         </geometry>
       </collision>
