@@ -1,0 +1,9 @@
+<launch>
+    <node pkg="joy" type="joy_node" name="joystick">
+    <param name="dev" value="/dev/input/js1" />
+  </node>
+
+    <node pkg="truck" type="truck_node.py" name="actuation_system">
+    </node>
+
+</launch>

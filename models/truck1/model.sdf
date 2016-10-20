@@ -1,0 +1,186 @@
+<?xml version="1.0" ?>
+
+<sdf version="1.5">
+  <model name="truck1">
+
+    <!-- Base Chassis -->
+    <link name="front_chassis">
+      <pose>4.56 0 1.33  0 0 0</pose>
+      <inertial>
+        <mass>20000</mass>
+        <inertia>
+          <ixx>100</ixx>
+          <iyy>100</iyy>
+          <izz>100</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>5.8 1.86 1.3</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>5.8 1.86 1.3</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Yellow</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+    <link name="rear_chassis">
+      <pose>0.88 0 1.33  0 0 0</pose>
+      <inertial>
+        <mass>10000</mass>
+        <inertia>
+          <ixx>100</ixx>
+          <iyy>100</iyy>
+          <izz>100</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>3.56 0.52 1.3</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>3.56 0.52 1.3</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Yellow</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+    <joint name="chassis_join" type="fixed">
+      <parent>rear_chassis</parent>
+      <child>front_chassis</child>
+      <axis>
+        <xyz>0 0 0</xyz>
+      </axis>
+    </joint>
+
+    <!-- Rear wheels -->
+    <model name="left_rear_wheel_assy">
+      <pose>0 0.26 0 0 0 0</pose>
+      <include>
+        <uri>model://unsteered_suspension</uri>
+      </include>
+
+      <plugin name="drive" filename="libgazebo_ros_set_joint.so">
+        <jointName>unsteered_suspension::unsteered_wheel_joint</jointName>
+        <topicName>chassis_force</topicName>
+        <actuationMode>1</actuationMode>
+        <reversed_direction>0</reversed_direction>
+      </plugin>
+
+    </model>
+
+    <joint name="chassis_to_left_rear_wheel" type="fixed">
+      <parent>rear_chassis</parent>
+      <child>left_rear_wheel_assy::unsteered_suspension::inner_mount</child>
+      <axis>
+        <xyz>0 0 0</xyz>
+      </axis>
+    </joint>
+
+    <model name="right_rear_wheel_assy">
+      <pose>0 -0.26 0 0 0 3.14159</pose>
+      <include>
+        <uri>model://unsteered_suspension</uri>
+      </include>
+
+      <plugin name="drive" filename="libgazebo_ros_set_joint.so">
+        <jointName>unsteered_suspension::unsteered_wheel_joint</jointName>
+        <topicName>chassis_force</topicName>
+        <actuationMode>1</actuationMode>
+        <reversed_direction>1</reversed_direction>
+      </plugin>
+
+    </model>
+
+    <joint name="chassis_to_right_rear_wheel" type="fixed">
+      <parent>rear_chassis</parent>
+      <child>right_rear_wheel_assy::unsteered_suspension::inner_mount</child>
+      <axis>
+        <xyz>0 0 0</xyz>
+      </axis>
+    </joint>
+
+    <!-- Front wheels -->
+    <model name="left_front_wheel_assy">
+      <pose>6.56 0.93 0 0 0 0</pose>
+      <include>
+        <uri>model://steered_suspension</uri>
+      </include>
+
+      <plugin name="set_wheel_angle" filename="libgazebo_ros_set_joint.so">
+        <jointName>steered_suspension::steering_joint</jointName>
+        <topicName>steer_angle</topicName>
+        <actuationMode>0</actuationMode>
+      </plugin>
+
+    </model>
+
+    <joint name="chassis_to_left_wheel" type="fixed">
+      <parent>front_chassis</parent>
+      <child>left_front_wheel_assy::steered_suspension::inner_mount</child>
+      <axis>
+        <xyz>0 0 0</xyz>
+      </axis>
+    </joint>
+
+    <model name="right_front_wheel_assy">
+      <pose>6.56 -0.93 0 0 0 3.14159</pose>
+      <include>
+        <uri>model://steered_suspension</uri>
+      </include>
+
+      <plugin name="set_wheel_angle" filename="libgazebo_ros_set_joint.so">
+        <jointName>steered_suspension::steering_joint</jointName>
+        <topicName>steer_angle</topicName>
+        <actuationMode>0</actuationMode>
+      </plugin>
+
+
+    </model>
+
+    <joint name="chassis_to_right_wheel" type="fixed">
+      <parent>front_chassis</parent>
+      <child>right_front_wheel_assy::steered_suspension::inner_mount</child>
+      <axis>
+        <xyz>0 0 0</xyz>
+      </axis>
+    </joint>
+
+    <!-- Plugins
+    <plugin filename="libgazebo_ros_force.so" name="gazebo_ros_force">
+      <bodyName>rear_chassis</bodyName>
+      <topicName>chassis_force</topicName>
+    </plugin>
+ -->
+
+  </model>
+</sdf>

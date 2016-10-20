@@ -1,0 +1,77 @@
+<?xml version="1.0" ?>
+
+<sdf version="1.5">
+  <model name="suspension_test2">
+
+    <link name="chassis">
+      <pose>0 -0.5 1.4  0 0 0</pose>
+      <inertial>
+        <mass>10000</mass>
+        <inertia>
+          <ixx>10000</ixx>
+          <iyy>10000</iyy>
+          <izz>10000</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>4.0 1.0 2.7</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>4.0 1.0 2.7</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+    <model name="left_wheel_assy">
+      <pose>2 0 0 0 0 0</pose>
+      <include>
+        <uri>model://unsteered_suspension</uri>
+      </include>
+    </model>
+
+    <joint name="chassis_to_left_wheel" type="fixed">
+      <parent>chassis</parent>
+      <child>left_wheel_assy::unsteered_suspension::inner_mount</child>
+      <axis>
+        <xyz>0 0 0</xyz>
+      </axis>
+    </joint>
+
+    <model name="right_wheel_assy">
+      <pose>2 -1 0 0 0 3.14159</pose>
+      <include>
+        <uri>model://unsteered_suspension</uri>
+      </include>
+    </model>
+
+    <joint name="chassis_to_right_wheel" type="fixed">
+      <parent>chassis</parent>
+      <child>right_wheel_assy::unsteered_suspension::inner_mount</child>
+      <axis>
+        <xyz>0 0 0</xyz>
+      </axis>
+    </joint>
+
+    <plugin filename="libgazebo_ros_force.so" name="gazebo_ros_force">
+      <bodyName>chassis</bodyName>
+      <topicName>chassis_force</topicName>
+    </plugin>
+
+  </model>
+</sdf>
