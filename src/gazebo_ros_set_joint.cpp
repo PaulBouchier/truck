@@ -187,8 +187,13 @@ void GazeboRosSetJoint::UpdateChild()
   }
   else if (2 == this->actuationMode_)
   {
+    double actual_speed = this->joint_->GetVelocity(0);
     this->current_speed_ += (this->delta_ * this->joint_msg_.data);
-    this->joint_->SetVelocity(0, this->current_speed_);
+    if (fabs(actual_speed - this->current_speed_) > 0.5)
+    {
+      //std::cerr << "Changing drive velocity, actual: " << actual_speed << " requested: " << this->current_speed_ << std::endl;
+      this->joint_->SetVelocity(0, this->current_speed_);
+    }
   }
 
   //this->lock_.unlock();

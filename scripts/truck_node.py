@@ -74,7 +74,7 @@ class TruckSimNode:
             self.steer_joint.data = 0.45 * self.joy_buttons[0]
             self.steer_pub.publish(self.steer_joint)
 
-            self.chassis_force.data = 1000000 * self.joy_buttons[1]
+            self.chassis_force.data = self.joy_buttons[1]
             self.chassis_force_pub.publish(self.chassis_force)
 
             # wait, then do it again

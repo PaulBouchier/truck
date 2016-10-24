@@ -153,9 +153,6 @@
           <upper>0.5</upper>
           <lower>-0.5</lower>
         </limit>
-        <dynamics>
-          <damping>0.5</damping>
-        </dynamics>
       </axis>
     </joint>
 
@@ -214,7 +211,13 @@
           <upper>0.45</upper>
         </limit>
         <use_parent_model_frame>true</use_parent_model_frame>
+        <dynamics>
+          <damping>1</damping>
+          <spring_stiffness>10000</spring_stiffness>
+          <spring_reference>0</spring_reference>
+        </dynamics>
       </axis>
+<!--
       <physics>
         <ode>
           <limit>
@@ -223,6 +226,7 @@
           </limit>
         </ode>
       </physics>
+-->
     </joint>
 
     <link name="wheel_bearing">
@@ -267,6 +271,7 @@
         <xyz>0 1 0</xyz>
         <use_parent_model_frame>true</use_parent_model_frame>
       </axis>
+<!--
       <physics>
         <ode>
           <limit>
@@ -275,17 +280,18 @@
           </limit>
         </ode>
       </physics>
+-->
     </joint>
 
 <!-- Wheel -->
     <link name="wheel_steered">
       <pose>0 0.95 1.4  -1.5707963267948966 0 0</pose>
       <inertial>
-        <mass>2000</mass>
+        <mass>200</mass>
         <inertia>
-          <ixx>100</ixx>
-          <iyy>100</iyy>
-          <izz>100</izz>
+          <ixx>10</ixx>
+          <iyy>10</iyy>
+          <izz>10</izz>
           <ixy>0</ixy>
           <ixz>0</ixz>
           <iyz>0</iyz>

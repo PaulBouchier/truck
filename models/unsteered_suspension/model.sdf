@@ -89,7 +89,7 @@
           <lower>-0.5</lower>
         </limit>
         <dynamics>
-          <damping>10000</damping>
+          <damping>1</damping>
           <spring_stiffness>100000</spring_stiffness>
           <spring_reference>-0.5</spring_reference>
         </dynamics>
@@ -153,9 +153,6 @@
           <upper>0.5</upper>
           <lower>-0.5</lower>
         </limit>
-        <dynamics>
-          <damping>0.5</damping>
-        </dynamics>
       </axis>
     </joint>
 
@@ -248,6 +245,7 @@
       <axis>
         <xyz>0 0 1</xyz>
       </axis>
+<!--
       <physics>
         <ode>
           <limit>
@@ -256,6 +254,7 @@
           </limit>
         </ode>
       </physics>
+-->
     </joint>
 
   </model>

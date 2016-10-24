@@ -88,14 +88,13 @@
       <include>
         <uri>model://unsteered_suspension</uri>
       </include>
-
-      <plugin name="drive" filename="libgazebo_ros_set_joint.so">
+      <plugin name="drive_left" filename="libgazebo_ros_set_joint.so">
         <jointName>unsteered_suspension::unsteered_wheel_joint</jointName>
         <topicName>chassis_force</topicName>
-        <actuationMode>1</actuationMode>
+        <actuationMode>2</actuationMode>
+        <scale>50</scale>
         <reversed_direction>0</reversed_direction>
       </plugin>
-
     </model>
 
     <joint name="chassis_to_left_rear_wheel" type="fixed">
@@ -112,13 +111,13 @@
         <uri>model://unsteered_suspension</uri>
       </include>
 
-      <plugin name="drive" filename="libgazebo_ros_set_joint.so">
+      <plugin name="drive_right" filename="libgazebo_ros_set_joint.so">
         <jointName>unsteered_suspension::unsteered_wheel_joint</jointName>
         <topicName>chassis_force</topicName>
-        <actuationMode>1</actuationMode>
+        <actuationMode>2</actuationMode>
+        <scale>20</scale>
         <reversed_direction>1</reversed_direction>
       </plugin>
-
     </model>
 
     <joint name="chassis_to_right_rear_wheel" type="fixed">
@@ -136,12 +135,12 @@
         <uri>model://steered_suspension</uri>
       </include>
 
-      <plugin name="set_wheel_angle" filename="libgazebo_ros_set_joint.so">
+      <plugin name="set_left_wheel_angle" filename="libgazebo_ros_set_joint.so">
         <jointName>steered_suspension::steering_joint</jointName>
         <topicName>steer_angle</topicName>
-        <actuationMode>0</actuationMode>
+        <actuationMode>1</actuationMode>
+        <scale>10000</scale>
       </plugin>
-
     </model>
 
     <joint name="chassis_to_left_wheel" type="fixed">
@@ -158,13 +157,12 @@
         <uri>model://steered_suspension</uri>
       </include>
 
-      <plugin name="set_wheel_angle" filename="libgazebo_ros_set_joint.so">
+      <plugin name="set_right_wheel_angle" filename="libgazebo_ros_set_joint.so">
         <jointName>steered_suspension::steering_joint</jointName>
         <topicName>steer_angle</topicName>
-        <actuationMode>0</actuationMode>
+        <actuationMode>1</actuationMode>
+        <scale>10000</scale>
       </plugin>
-
-
     </model>
 
     <joint name="chassis_to_right_wheel" type="fixed">
