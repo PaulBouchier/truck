@@ -58,10 +58,13 @@ class TruckSimNode:
         self.steer_pub = rospy.Publisher(self.steer_angle_topic, Float64, queue_size=1)
         self.chassis_force_pub = rospy.Publisher(self.chassis_force_topic, Float64, queue_size=1)
 
-        # array of joy buttons/axes:
+        # array of joy axes:
         # 0: turn - (+ve = left)
-        # 1: acceleration (+ve = forward)
-        self.joy_buttons = [0, 0]
+        # 1: acceleration (+ve = increase in current direction)
+        # 2: gear
+        self.steer = 0
+        self.accel = 0
+        self.gear = 0
         self.steer_joint = Float64()
         self.chassis_force = Float64()
 
@@ -71,19 +74,26 @@ class TruckSimNode:
 
         while not rospy.is_shutdown():
             # send updated movement commands
-            self.steer_joint.data = 0.45 * self.joy_buttons[0]
+            self.steer_joint.data = 0.45 * self.steer
             self.steer_pub.publish(self.steer_joint)
 
-            self.chassis_force.data = self.joy_buttons[1]
+            self.chassis_force.data = self.accel
             self.chassis_force_pub.publish(self.chassis_force)
 
             # wait, then do it again
             r.sleep()
 
     """ Receive & store joystick controls """
+        # axes[0]: left joystick lateral: turn - (+ve = left)
+        # axes[5]: right trigger: acceleration (+ve = increase)
+        # axes[7]: cross-pad: gear (1 = fwd, -1 = rev)
     def joyCb(self,req):
-        self.joy_buttons[0] = req.axes[0] # left joystick left/right
-        self.joy_buttons[1] = req.axes[1] # left joystick forward/back
+        self.steer = req.axes[0] # left joystick left/right
+        self.accel = 0 - req.axes[5] # right trigger faster/slower, increasing produces +1->-1
+        if -1 == req.axes[7]:
+            self.gear = -1
+        elif 1 == req.axes[7]:
+            self.gear = 1
         # print 'turn: ', self.joy_buttons[0], ' accel: ', self.joy_buttons[1]
 
 if __name__ == "__main__":    

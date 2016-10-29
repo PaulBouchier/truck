@@ -92,7 +92,7 @@
         <jointName>unsteered_suspension::unsteered_wheel_joint</jointName>
         <topicName>chassis_force</topicName>
         <actuationMode>2</actuationMode>
-        <scale>50</scale>
+        <scale>20</scale>
         <reversed_direction>0</reversed_direction>
       </plugin>
     </model>
